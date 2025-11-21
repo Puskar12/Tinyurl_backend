@@ -38,19 +38,29 @@ export const getLinkStats = async (req, res) => {
   return res.json(link);
 };
 
-export const updateLink = async (req, res) =>{
-  const code = req.params.code
-  const{ newTargetUrl, newCode} = req.body
-  const link = await Link.findOne({ code });
-  console.log(newTargetUrl)
-  console.log( newCode)
-  if (!link) return res.status(404).json({ error: "Not found" });
-  if(newTargetUrl) link.targetUrl = newTargetUrl;
-  if(newCode) link.code = newCode
-  link.updatedAt = Date.now()
-  await link.save()
-  
-}
+export const updateLink = async (req, res) => {
+  try {
+    const code = req.params.code;
+    const { newTargetUrl, newCode } = req.body;
+
+    const link = await Link.findOne({ code });
+    if (!link) {
+      return res.status(404).json({ error: "Not found" });
+    }
+
+    if (newTargetUrl) link.targetUrl = newTargetUrl;
+    if (newCode) link.code = newCode;
+    link.updatedAt = Date.now();
+
+    await link.save();
+
+    return res.status(200).json({ message: "Updated successfully", link });
+  } catch (err) {
+    console.error("updateLink error:", err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
 
 export const deleteLink = async (req, res) => {
   const code = req.params.code;
