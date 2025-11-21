@@ -25,6 +25,7 @@ export const createLink = async (req, res) => {
 
 export const listLinks = async (req, res) => {
   const links = await Link.find().sort({ createdAt: -1 });
+  console.log(links)
   return res.json(links);
 };
 

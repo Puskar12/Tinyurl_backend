@@ -6,7 +6,7 @@ const linkSchema = new mongoose.Schema(
     targetUrl: { type: String, required: true },
     clicks: { type: Number, default: 0 },
     lastClicked: { type: Date, default: null },
-    createdAt: { type: Date, default: Date.now() },
+    createdAt: { type: Date, default: Date.now},
     updatedAt: { type: Date, default: null },
   }
 );
